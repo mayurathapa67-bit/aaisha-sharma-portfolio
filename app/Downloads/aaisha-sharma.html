@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Aaisha Sharma — Frontend Developer</title>
+<meta name="description" content="Building pixel-perfect, blazing-fast web experiences." />
+<style>
+  :root {
+    --from: #fbbf24;
+    --via: #f59e0b;
+    --to: #d97706;
+    --accent: #f59e0b;
+    --glow: rgba(245,158,11,0.4);
+    --bg: #0a0a0c;
+    --fg: #f5f5f7;
+    --muted: #a1a1aa;
+    --card: #18181b;
+    --border: rgba(255,255,255,0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding: 6rem 0 4rem;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--from), var(--via), var(--to));
+    opacity: 0.12;
+    pointer-events: none;
+  }
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.4;
+    pointer-events: none;
+    animation: float 20s ease-in-out infinite;
+  }
+  .blob-1 { width: 500px; height: 500px; top: -150px; left: -150px; background: var(--from); }
+  .blob-2 { width: 600px; height: 600px; bottom: -200px; right: -150px; background: var(--to); animation-delay: -10s; }
+  @keyframes float {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(60px, -40px) scale(1.1); }
+    66% { transform: translate(-40px, 50px) scale(0.95); }
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+  @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; gap: 2rem; } .hero-side { display: none; } }
+  .badge-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 1rem;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    font-size: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+  .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: #34d399; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+  .hero-prof {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+  .hero h1 {
+    font-size: clamp(3rem, 8vw, 6rem);
+    line-height: 0.95;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 .grad {
+    background: linear-gradient(135deg, var(--from), var(--via), var(--to));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% 200%;
+    animation: grad-shift 4s ease-in-out infinite;
+  }
+  @keyframes grad-shift { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+  .hero-tag { font-size: 1.25rem; color: var(--muted); margin-bottom: 2rem; max-width: 600px; }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 2rem; font-size: 0.9rem; color: var(--muted); }
+  .hero-meta span { display: inline-flex; align-items: center; gap: 0.4rem; }
+  .hero-meta b { color: var(--accent); font-weight: 400; }
+  .btn-row { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.9rem 1.75rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+    border: none;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--from), var(--to));
+    color: white;
+    box-shadow: 0 10px 30px -10px var(--glow);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 15px 40px -10px var(--glow); }
+  .btn-ghost {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    color: var(--fg);
+  }
+  .btn-ghost:hover { background: rgba(255,255,255,0.1); }
+
+  /* Hero side */
+  .hero-side { position: relative; aspect-ratio: 1; max-width: 400px; margin: 0 auto; }
+  .ring-1, .ring-2 {
+    position: absolute;
+    border-radius: 50%;
+    border: 2px dashed var(--accent);
+  }
+  .ring-1 { inset: 0; animation: spin 40s linear infinite; }
+  .ring-2 { inset: 2rem; border-style: solid; opacity: 0.4; animation: spin 30s linear infinite reverse; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .avatar-wrap {
+    position: absolute;
+    inset: 4rem;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 0 1px var(--accent), 0 0 40px var(--glow), 0 0 80px var(--glow);
+  }
+  .avatar-img { width: 100%; height: 100%; object-fit: cover; }
+  .avatar-initials {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, var(--from), var(--via), var(--to));
+    color: white;
+    font-size: 4rem;
+    font-weight: 800;
+  }
+  .float-badge {
+    position: absolute;
+    padding: 0.5rem 0.85rem;
+    border-radius: 1rem;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    backdrop-filter: blur(10px);
+    font-size: 0.75rem;
+    font-weight: 600;
+    animation: float-y 6s ease-in-out infinite;
+  }
+  @keyframes float-y { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+  .fb-1 { top: -8px; right: 2rem; }
+  .fb-2 { bottom: 2rem; left: -1rem; animation-delay: -3s; }
+  .fb-3 { top: 33%; right: -2rem; animation-delay: -1.5s; }
+
+  /* Sections */
+  section { padding: 6rem 0; position: relative; }
+  .section-alt { background: rgba(255,255,255,0.02); }
+  .section-head { text-align: center; max-width: 700px; margin: 0 auto 3rem; }
+  .eyebrow {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
+    padding: 0.3rem 0.85rem;
+    border-radius: 999px;
+    margin-bottom: 0.85rem;
+  }
+  .section-head h2 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 1rem; }
+  .section-head h2 .grad {
+    background: linear-gradient(135deg, var(--from), var(--to));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .section-head p { color: var(--muted); font-size: 1.1rem; }
+
+  /* About */
+  .about-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 3rem; align-items: start; }
+  @media (max-width: 900px) { .about-grid { grid-template-columns: 1fr; } }
+  .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .stat {
+    padding: 1.25rem;
+    border-radius: 1rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+  }
+  .stat b { display: block; font-size: 1.75rem; color: var(--accent); }
+  .stat small { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
+  .about-card {
+    padding: 2.5rem;
+    border-radius: 1.5rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(10px);
+  }
+  .about-card .quote { font-size: 1.1rem; color: rgba(255,255,255,0.9); margin-bottom: 1.5rem; white-space: pre-line; }
+  .about-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+  .about-meta div { font-size: 0.85rem; }
+  .about-meta small { display: block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 0.2rem; }
+  .about-meta b { font-weight: 600; }
+
+  /* Skills */
+  .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; max-width: 900px; margin: 0 auto; }
+  @media (max-width: 700px) { .skills-grid { grid-template-columns: 1fr; } }
+  .skill-cat { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: var(--muted); margin-bottom: 1.25rem; }
+  .skill { margin-bottom: 1rem; }
+  .skill-head { display: flex; justify-content: space-between; font-size: 0.875rem; margin-bottom: 0.4rem; }
+  .skill-pct { color: var(--muted); font-variant-numeric: tabular-nums; }
+  .skill-bar { height: 8px; border-radius: 999px; background: rgba(255,255,255,0.1); overflow: hidden; }
+  .skill-fill {
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--from), var(--to));
+    animation: grow 1.2s cubic-bezier(0.16,1,0.3,1) backwards;
+  }
+  @keyframes grow { from { width: 0 !important; } }
+
+  /* Services */
+  .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+  .service {
+    padding: 1.5rem;
+    border-radius: 1.5rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    transition: transform 0.3s;
+  }
+  .service:hover { transform: translateY(-6px); }
+  .service-icon {
+    width: 48px; height: 48px;
+    border-radius: 1rem;
+    display: flex; align-items: center; justify-content: center;
+    background: color-mix(in srgb, var(--accent) 15%, transparent);
+    color: var(--accent);
+    margin-bottom: 1.25rem;
+    font-size: 1.25rem;
+  }
+  .service h3 { font-size: 1.1rem; margin-bottom: 0.5rem; }
+  .service p { font-size: 0.875rem; color: var(--muted); }
+
+  /* Projects */
+  .projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  @media (max-width: 700px) { .projects-grid { grid-template-columns: 1fr; } }
+  .project {
+    display: block;
+    border-radius: 1.5rem;
+    overflow: hidden;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    transition: transform 0.3s;
+  }
+  .project:hover { transform: translateY(-6px); }
+  .project-head {
+    height: 180px;
+    position: relative;
+    background: linear-gradient(135deg, var(--from), var(--via), var(--to));
+  }
+  .project-cat {
+    position: absolute;
+    top: 1rem; left: 1rem;
+    padding: 0.3rem 0.7rem;
+    border-radius: 999px;
+    background: rgba(0,0,0,0.3);
+    backdrop-filter: blur(10px);
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 600;
+  }
+  .project-body { padding: 1.5rem; }
+  .project-body h3 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+  .project-body p { font-size: 0.9rem; color: var(--muted); margin-bottom: 1rem; }
+  .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .tag {
+    padding: 0.2rem 0.6rem;
+    border-radius: 0.4rem;
+    font-size: 0.7rem;
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
+    color: var(--accent);
+  }
+
+  /* Journey */
+  .journey-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+  @media (max-width: 700px) { .journey-grid { grid-template-columns: 1fr; } }
+  .journey-head { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 2rem; }
+  .journey-head .icon {
+    width: 40px; height: 40px;
+    border-radius: 0.75rem;
+    display: flex; align-items: center; justify-content: center;
+    background: color-mix(in srgb, var(--accent) 15%, transparent);
+    color: var(--accent);
+  }
+  .journey-head h3 { font-size: 1.5rem; }
+  .timeline { padding-left: 2rem; position: relative; }
+  .timeline::before { content: ''; position: absolute; left: 0.5rem; top: 0.5rem; bottom: 0.5rem; width: 1px; background: rgba(255,255,255,0.15); }
+  .timeline-item { position: relative; margin-bottom: 2rem; }
+  .timeline-dot {
+    position: absolute;
+    left: -1.5rem; top: 0.4rem;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 4px var(--bg);
+  }
+  .timeline-date { font-size: 0.75rem; font-weight: 700; color: var(--accent); margin-bottom: 0.25rem; }
+  .timeline-item h4 { font-size: 1.1rem; margin-bottom: 0.2rem; }
+  .timeline-sub { font-size: 0.85rem; color: var(--muted); margin-bottom: 0.5rem; }
+  .timeline-item p { font-size: 0.875rem; color: rgba(255,255,255,0.8); }
+  .badge { display: inline-block; padding: 0.1rem 0.4rem; border-radius: 0.25rem; background: rgba(52,211,153,0.15); color: #34d399; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; margin-left: 0.4rem; }
+
+  /* Testimonials */
+  .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+  .testimonial {
+    padding: 1.75rem;
+    border-radius: 1.5rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+  }
+  .stars { color: var(--accent); margin-bottom: 0.75rem; }
+  .quote { font-style: italic; color: rgba(255,255,255,0.85); margin-bottom: 1.5rem; }
+  .t-author { display: flex; align-items: center; gap: 0.75rem; }
+  .t-avatar {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--from), var(--to));
+    display: flex; align-items: center; justify-content: center;
+    color: white;
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
+  .t-name { font-weight: 600; font-size: 0.875rem; }
+  .t-role { font-size: 0.75rem; color: var(--muted); }
+
+  /* Contact */
+  .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 3rem; align-items: start; }
+  @media (max-width: 900px) { .contact-grid { grid-template-columns: 1fr; } }
+  .contact-info { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1.5rem; }
+  .contact-info a { display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0; }
+  .contact-info .icon-box {
+    width: 40px; height: 40px;
+    border-radius: 0.75rem;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--accent);
+  }
+  .contact-info small { display: block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
+  .contact-info b { font-weight: 600; font-size: 0.875rem; }
+  .socials { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }
+  .social {
+    padding: 0.4rem 1rem;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    font-size: 0.75rem;
+    font-weight: 500;
+    transition: background 0.2s;
+  }
+  .social:hover { background: rgba(255,255,255,0.1); }
+  .contact-form {
+    padding: 2.5rem;
+    border-radius: 1.5rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  @media (max-width: 500px) { .form-row { grid-template-columns: 1fr; } }
+  .form-group { margin-bottom: 1rem; }
+  .form-group label { display: block; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 0.5rem; }
+  .form-group input, .form-group textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: 0.75rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--fg);
+    font-family: inherit;
+    font-size: 0.9rem;
+  }
+  .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--accent); }
+  .form-group textarea { resize: vertical; min-height: 120px; }
+
+  /* Footer */
+  footer {
+    padding: 2.5rem 0;
+    border-top: 1px solid var(--border);
+    background: rgba(255,255,255,0.02);
+  }
+  .footer-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; font-size: 0.85rem; color: var(--muted); }
+  .footer-brand { display: flex; align-items: center; gap: 0.5rem; }
+  .footer-logo {
+    width: 28px; height: 28px;
+    border-radius: 0.5rem;
+    background: linear-gradient(135deg, var(--from), var(--to));
+    background-image: url('/uploads/aaisha-sharma-avatar-1783913325616.webp'); background-size: cover;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 10px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 10px; }
+  ::selection { background: var(--accent); color: white; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <div class="badge-pill">
+          <span class="badge-dot"></span>
+          Available for new projects
+        </div>
+        <div class="hero-prof">Frontend Developer</div>
+        <h1>Hi, I'm<br><span class="grad">Aaisha Sharma</span></h1>
+        <p class="hero-tag">Building pixel-perfect, blazing-fast web experiences.</p>
+        <div class="hero-meta">
+          <span>📍 <b>Sydney, Australia</b></span>
+          <span>⏱ <b>5 years experience</b></span>
+          <span>✦ <b>6 skills</b></span>
+        </div>
+        <div class="btn-row">
+          <a href="#contact" class="btn btn-primary">Get in touch →</a>
+          <a href="mailto:aaisha.sharma055@gmail.com" class="btn btn-ghost">✉ aaisha.sharma055@gmail.com</a>
+        </div>
+      </div>
+      <div class="hero-side">
+        <div class="ring-1"></div>
+        <div class="ring-2"></div>
+        <div class="avatar-wrap"><img src="/uploads/aaisha-sharma-avatar-1783913325616.webp" alt="Aaisha Sharma" class="avatar-img" /></div>
+        <div class="float-badge fb-1">4 Projects</div>
+        <div class="float-badge fb-2">3 Reviews</div>
+        <div class="float-badge fb-3">4 Services</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section>
+  <div class="container">
+    <div class="about-grid">
+      <div>
+        <div class="section-head" style="text-align:left;">
+          <span class="eyebrow">About me</span>
+          <h2>A bit about <span class="grad">my story</span></h2>
+        </div>
+        <div class="stat-grid">
+          <div class="stat"><b>5+</b><small>Years experience</small></div>
+          <div class="stat"><b>4+</b><small>Projects shipped</small></div>
+          <div class="stat"><b>6</b><small>Core skills</small></div>
+          <div class="stat"><b>3</b><small>Happy clients</small></div>
+        </div>
+      </div>
+      <div class="about-card">
+        <p class="quote">I am a frontend developer in Sydney who lives at the intersection of design and engineering. For the past five years I have built production React and Next.js applications for startups and enterprises, specialising in performance, accessibility, and motion. My happy place is a codebase with strict TypeScript, a thoughtful component library, and a CI pipeline that catches regressions before users do. I have migrated legacy SPAs to App Router, cut Largest Contentful Paint by 60%, and shipped design systems used across 12 product squads. When I log off, I contribute to open-source UI libraries and write tutorials on Next.js patterns.</p>
+        <div class="about-meta">
+          <div><small>Australia</small><b>Manly, Sydney NSW</b></div>
+          <div><small>Nepal</small><b>Thimi, Bhaktapur</b></div>
+          <div><small>Phone</small><b>+61 482 075 123</b></div>
+          <div><small>Email</small><b>aaisha.sharma055@gmail.com</b></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="section-alt">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Skills & expertise</span>
+      <h2>What I'm <span class="grad">great at</span></h2>
+      <p>A blend of craft, tools, and strategic thinking built over years of shipping work.</p>
+    </div>
+    <div class="skills-grid">
+    <div class="skill-group">
+      <h3 class="skill-cat">Frameworks</h3>
+      
+        <div class="skill">
+          <div class="skill-head"><span>React / Next.js</span><span class="skill-pct">95%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:95%"></div></div>
+        </div>
+      
+    </div>
+  
+    <div class="skill-group">
+      <h3 class="skill-cat">Languages</h3>
+      
+        <div class="skill">
+          <div class="skill-head"><span>TypeScript</span><span class="skill-pct">93%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:93%"></div></div>
+        </div>
+      
+    </div>
+  
+    <div class="skill-group">
+      <h3 class="skill-cat">Styling</h3>
+      
+        <div class="skill">
+          <div class="skill-head"><span>Tailwind CSS</span><span class="skill-pct">92%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:92%"></div></div>
+        </div>
+      
+    </div>
+  
+    <div class="skill-group">
+      <h3 class="skill-cat">Engineering</h3>
+      
+        <div class="skill">
+          <div class="skill-head"><span>Performance Optimization</span><span class="skill-pct">90%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div>
+        </div>
+      
+    </div>
+  
+    <div class="skill-group">
+      <h3 class="skill-cat">Animation</h3>
+      
+        <div class="skill">
+          <div class="skill-head"><span>Framer Motion</span><span class="skill-pct">88%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:88%"></div></div>
+        </div>
+      
+    </div>
+  
+    <div class="skill-group">
+      <h3 class="skill-cat">Quality</h3>
+      
+        <div class="skill">
+          <div class="skill-head"><span>Testing (Jest/Playwright)</span><span class="skill-pct">84%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:84%"></div></div>
+        </div>
+      
+    </div>
+  </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section>
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Services</span>
+      <h2>How I can <span class="grad">help you</span></h2>
+      <p>Ways we can work together.</p>
+    </div>
+    <div class="services-grid">
+    <div class="service">
+      <div class="service-icon">✦</div>
+      <h3>Web App Development</h3>
+      <p>Production-grade React/Next.js apps with strict TypeScript and CI.</p>
+    </div>
+  
+    <div class="service">
+      <div class="service-icon">✦</div>
+      <h3>Performance Audits</h3>
+      <p>Find and fix Core Web Vitals issues; ship sub-second loads.</p>
+    </div>
+  
+    <div class="service">
+      <div class="service-icon">✦</div>
+      <h3>Design Systems</h3>
+      <p>Component libraries with tokens, docs, and zero-runtime styling.</p>
+    </div>
+  
+    <div class="service">
+      <div class="service-icon">✦</div>
+      <h3>Animation Engineering</h3>
+      <p>Buttery micro-interactions and scroll experiences with Framer Motion.</p>
+    </div>
+  </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="section-alt">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Selected work</span>
+      <h2>Recent <span class="grad">projects</span></h2>
+      <p>A snapshot of the work I'm most proud of.</p>
+    </div>
+    <div class="projects-grid">
+    <a href="#" class="project" target="_blank" rel="noreferrer">
+      <div class="project-head">
+        <span class="project-cat">Web</span>
+      </div>
+      <div class="project-body">
+        <h3>Aurora Commerce</h3>
+        <p>Headless e-commerce storefront with sub-1s LCP and 95+ Lighthouse score.</p>
+        <div class="tags"><span class="tag">Next.js</span><span class="tag">Shopify</span></div>
+      </div>
+    </a>
+  
+    <a href="#" class="project" target="_blank" rel="noreferrer">
+      <div class="project-head">
+        <span class="project-cat">Product</span>
+      </div>
+      <div class="project-body">
+        <h3>Pulse Analytics Dashboard</h3>
+        <p>Real-time analytics UI rendering 100K data points smoothly.</p>
+        <div class="tags"><span class="tag">React</span><span class="tag">Charts</span></div>
+      </div>
+    </a>
+  
+    <a href="#" class="project" target="_blank" rel="noreferrer">
+      <div class="project-head">
+        <span class="project-cat">Library</span>
+      </div>
+      <div class="project-body">
+        <h3>Halo Design System</h3>
+        <p>A 120-component React library with full a11y coverage.</p>
+        <div class="tags"><span class="tag">React</span><span class="tag">TypeScript</span></div>
+      </div>
+    </a>
+  
+    <a href="#" class="project" target="_blank" rel="noreferrer">
+      <div class="project-head">
+        <span class="project-cat">Web</span>
+      </div>
+      <div class="project-body">
+        <h3>Wander Travel Blog</h3>
+        <p>MDX-powered blog with 3D scroll effects.</p>
+        <div class="tags"><span class="tag">Next.js</span><span class="tag">MDX</span></div>
+      </div>
+    </a>
+  </div>
+  </div>
+</section>
+
+<!-- JOURNEY -->
+<section>
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">My journey</span>
+      <h2>Career & <span class="grad">education</span></h2>
+    </div>
+    <div class="journey-grid">
+      <div>
+        <div class="journey-head"><div class="icon">💼</div><h3>Work experience</h3></div>
+        <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">2022 — Present <span class="badge">Current</span></div>
+      <h4>Senior Frontend Engineer</h4>
+      <div class="timeline-sub">Aurora Labs</div>
+      <p>Lead frontend for the commerce platform; mentor 4 engineers.</p>
+    </div>
+  
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">2019 — 2022</div>
+      <h4>Frontend Developer</h4>
+      <div class="timeline-sub">Pulse Tech</div>
+      <p>Built the analytics dashboard and component library.</p>
+    </div>
+  
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">2017 — 2019</div>
+      <h4>Web Developer</h4>
+      <div class="timeline-sub">Freelance</div>
+      <p>Built marketing sites and small web apps for local businesses.</p>
+    </div>
+  </div>
+      </div>
+      <div>
+        <div class="journey-head"><div class="icon">🎓</div><h3>Education</h3></div>
+        <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">2017</div>
+      <h4>BSc in Software Engineering</h4>
+      <div class="timeline-sub">Tribhuvan University</div>
+      <p>Final project on real-time web applications.</p>
+    </div>
+  
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">2020</div>
+      <h4>Meta Frontend Developer Certificate</h4>
+      <div class="timeline-sub">Coursera</div>
+      <p>Specialisation in React and UX patterns.</p>
+    </div>
+  </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section-alt">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Kind words</span>
+      <h2>What clients <span class="grad">say</span></h2>
+    </div>
+    <div class="testimonials-grid">
+    <div class="testimonial">
+      <div class="stars">★★★★★</div>
+      <p class="quote">"Aaisha is the engineer you call when performance matters. She cut our LCP in half."</p>
+      <div class="t-author">
+        <div class="t-avatar">HW</div>
+        <div><div class="t-name">Henry Walsh</div><div class="t-role">CTO, Aurora Labs</div></div>
+      </div>
+    </div>
+  
+    <div class="testimonial">
+      <div class="stars">★★★★★</div>
+      <p class="quote">"Her handoffs are the cleanest I have ever worked with. A true partner."</p>
+      <div class="t-author">
+        <div class="t-avatar">PI</div>
+        <div><div class="t-name">Priya Iyer</div><div class="t-role">Designer, Pulse Tech</div></div>
+      </div>
+    </div>
+  
+    <div class="testimonial">
+      <div class="stars">★★★★★</div>
+      <p class="quote">"She shipped our blog in two weeks and it scored 99 on Lighthouse. Wild."</p>
+      <div class="t-author">
+        <div class="t-avatar">TB</div>
+        <div><div class="t-name">Tom Becker</div><div class="t-role">PM, Wander</div></div>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section>
+  <div class="container">
+    <div class="contact-grid">
+      <div>
+        <div class="section-head" style="text-align:left;">
+          <span class="eyebrow">Get in touch</span>
+          <h2>Let's build <span class="grad">something great</span></h2>
+          <p>Have a project in mind? Fill out the form and I'll get back to you within 24 hours.</p>
+        </div>
+        <div class="contact-info">
+          <a href="mailto:aaisha.sharma055@gmail.com"><div class="icon-box">✉</div><div><small>Email</small><b>aaisha.sharma055@gmail.com</b></div></a>
+          <a href="tel:+61 482 075 123"><div class="icon-box">☎</div><div><small>Phone</small><b>+61 482 075 123</b></div></a>
+          <div><div class="icon-box">📍</div><div><small>Based in</small><b>Manly, Sydney NSW</b></div></div>
+        </div>
+        <div class="socials">
+    <a href="https://github.com/aaishasharma" target="_blank" rel="noreferrer" class="social">GitHub</a>
+  
+    <a href="https://linkedin.com/in/aaisha-sharma" target="_blank" rel="noreferrer" class="social">LinkedIn</a>
+  
+    <a href="https://twitter.com/aaisha_dev" target="_blank" rel="noreferrer" class="social">Twitter</a>
+  </div>
+      </div>
+      <form class="contact-form" onsubmit="event.preventDefault(); this.querySelector('button').textContent='Sent ✓'; this.querySelector('button').disabled=true;">
+        <div class="form-row">
+          <div class="form-group"><label>Your name</label><input required placeholder="Jane Smith" /></div>
+          <div class="form-group"><label>Email</label><input required type="email" placeholder="jane@company.com" /></div>
+        </div>
+        <div class="form-group"><label>Subject</label><input placeholder="Project enquiry" /></div>
+        <div class="form-group"><label>Message</label><textarea required placeholder="Tell me about your project..."></textarea></div>
+        <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;">Send message →</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-row">
+      <div class="footer-brand">
+        <div class="footer-logo"></div>
+        <span>Aaisha Sharma · 2026</span>
+      </div>
+      <div>Frontend Developer · Sydney, Australia</div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

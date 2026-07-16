@@ -1,26 +1,192 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-cream: #faf7f2;
+  --color-cream-deep: #f3ece1;
+  --color-charcoal: #1a1a1a;
+  --color-ink: #2d2d2d;
+  --color-soft: #6b6b6b;
+  --color-coral: #ff6b6b;
+  --color-gold: #ffd93d;
+  --color-teal: #6bcb77;
+
+  --font-playfair: "Playfair Display", ui-serif, Georgia, serif;
+  --font-inter: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-cormorant: "Cormorant Garamond", ui-serif, Georgia, serif;
+
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-float-slow: float 9s ease-in-out infinite;
+  --animate-drift: drift 14s ease-in-out infinite;
+  --animate-spin-slow: spin 22s linear infinite;
+  --animate-shimmer: shimmer 2.4s linear infinite;
+  --animate-gradient: gradientShift 8s ease infinite;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-18px) rotate(3deg);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@keyframes drift {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate(14px, -22px) rotate(-4deg);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-cream);
+    color: var(--color-ink);
+    font-family: var(--font-inter);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-playfair);
+    color: var(--color-charcoal);
+  }
+
+  ::selection {
+    background: var(--color-coral);
+    color: #fff;
+  }
+}
+
+@layer components {
+  .font-display {
+    font-family: var(--font-playfair);
+  }
+  .font-body {
+    font-family: var(--font-inter);
+  }
+  .font-accent {
+    font-family: var(--font-cormorant);
+  }
+
+  .creative-gradient {
+    background-image: linear-gradient(
+      120deg,
+      var(--color-coral),
+      var(--color-gold),
+      var(--color-teal)
+    );
+    background-size: 200% 200%;
+    animation: var(--animate-gradient);
+  }
+
+  .text-gradient {
+    background-image: linear-gradient(
+      120deg,
+      var(--color-coral),
+      var(--color-gold) 45%,
+      var(--color-teal)
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .glass {
+    background: rgba(250, 247, 242, 0.72);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  .paper-grain {
+    background-image: radial-gradient(
+        rgba(45, 45, 45, 0.035) 1px,
+        transparent 1px
+      );
+    background-size: 4px 4px;
+  }
+
+  .container-art {
+    width: 100%;
+    max-width: 78rem;
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+  }
+
+  @media (min-width: 1024px) {
+    .container-art {
+      padding-inline: 2.5rem;
+    }
+  }
+}
+
+@layer utilities {
+  .animate-float {
+    animation: var(--animate-float);
+  }
+  .animate-float-slow {
+    animation: var(--animate-float-slow);
+  }
+  .animate-drift {
+    animation: var(--animate-drift);
+  }
+  .animate-spin-slow {
+    animation: var(--animate-spin-slow);
+  }
+  .animate-shimmer {
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 217, 61, 0.45),
+      transparent
+    );
+    background-size: 200% 100%;
+    animation: var(--animate-shimmer);
+  }
+  .writing-vertical {
+    writing-mode: vertical-rl;
+  }
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
 }
